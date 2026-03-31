@@ -67,5 +67,5 @@ tcc-risco-queda-sp/
    * Finalize no `03_mapa.ipynb` para gerar a estratificação do risco territorial urbano.
 
 ---
-👤 **Autor:** Amilcar Ferraz Farina 
+👤 **Autor:** Amilcar Ferraz Farina (Mica Farina)
 🎓 **Instituição:** Especialização em Data Science & Analytics – USP/ESALQ

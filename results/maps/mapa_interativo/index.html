@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-23.583646594341094,-46.61048246951675],[-23.564036359557722,-46.58352393005158]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // modify popup if contains media
+        function addClassToPopupIfMedia(content, popup) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var imgTd = tempDiv.querySelector('td img');
+            if (imgTd) {
+                var src = imgTd.getAttribute('src');
+                if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(src)) {
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
+                    var audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = src;
+                    imgTd.parentNode.replaceChild(audio, imgTd);
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp4|webm|ogg|mov)$/i.test(src)) {
+                    var video = document.createElement('video');
+                    video.controls = true;
+                    video.src = src;
+                    video.style.width = "400px";
+                    video.style.height = "300px";
+                    video.style.maxHeight = "60vh";
+                    video.style.maxWidth = "60vw";
+                    imgTd.parentNode.replaceChild(video, imgTd);
+                    popup._contentNode.classList.add('media');
+                    // Aggiorna il popup quando il video carica i metadati
+                    video.addEventListener('loadedmetadata', function() {
+                        popup.update();
+                    });
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else {
+                    popup._contentNode.classList.remove('media');
+                }
+            } else {
+                popup._contentNode.classList.remove('media');
+            }
+        }
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">endereco_busca</th>\
+                        <td>' + (feature.properties['endereco_busca'] !== null ? autolinker.link(String(feature.properties['endereco_busca']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">prob_formatada</th>\
+                        <td>' + (feature.properties['prob_formatada'] !== null ? autolinker.link(String(feature.properties['prob_formatada']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">classe_risco</th>\
+                        <td>' + (feature.properties['classe_risco'] !== null ? autolinker.link(String(feature.properties['classe_risco']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_0(feature) {
+            switch(String(feature.properties['classe_risco'])) {
+                case '1 - Baixo Risco':
+                    return {
+                pane: 'pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,220,226,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2 - Risco Moderado':
+                    return {
+                pane: 'pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(8,145,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3 - Alto Risco (Prioridade de Vistoria)':
+                    return {
+                pane: 'pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,230,60,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '4 - Risco Crítico (Emergência)':
+                    return {
+                pane: 'pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,26,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,4,3,0.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0');
+        map.getPane('pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0').style.zIndex = 400;
+        map.getPane('pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0').style['mix-blend-mode'] = 'normal';
+        var layer_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0 = new L.geoJson(json_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+            layerName: 'layer_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+            pane: 'pane_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0',
+            onEachFeature: pop_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0,
+            style: style_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_0,
+        });
+        bounds_group.addLayer(layer_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0);
+        map.addLayer(layer_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0);
+        var overlaysTree = [
+            {label: 'mapa_risco_qgis2web__20260331-1103_geral (1) — mapa_risco_qgis2web__20260331-1103_geral<br /><table><tr><td style="text-align: center;"><img src="legend/mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_1BaixoRisco0.png" /></td><td>1 - Baixo Risco</td></tr><tr><td style="text-align: center;"><img src="legend/mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_2RiscoModerado1.png" /></td><td>2 - Risco Moderado</td></tr><tr><td style="text-align: center;"><img src="legend/mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_3AltoRiscoPrioridadedeVistoria2.png" /></td><td>3 - Alto Risco (Prioridade de Vistoria)</td></tr><tr><td style="text-align: center;"><img src="legend/mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_4RiscoCríticoEmergência3.png" /></td><td>4 - Risco Crítico (Emergência)</td></tr><tr><td style="text-align: center;"><img src="legend/mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_4.png" /></td><td></td></tr></table>', layer: layer_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'endereco_busca'}));
+        if (typeof url === 'undefined') {
+            document.getElementsByClassName('search-button')[0].className += ' fa fa-binoculars';
+        } else {
+            document.getElementsByClassName('search-button')[1].className += ' fa fa-binoculars';
+        }
+        </script>        
+    </body>
+</html>

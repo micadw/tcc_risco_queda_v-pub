@@ -1,0 +1,66 @@
+# ==========================================
+# 1. ARQUIVOS DE DADOS (Pesados - Bloqueados)
+# ==========================================
+*.parquet
+*.geojson
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.csv
+*.zip
+*.rar
+*.7z
+
+# Ignorar os dados, mas manter as pastas para a estrutura
+data/raw/*
+data/processed/*
+# Ignorar resultados temporários do TCC
+results/figures/*
+results/models/archive/*
+cache/
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+# Ignorar todos os resultados gerados (imagens, modelos e tabelas)
+results/figures/
+results/models/
+results/tables/
+
+# ==========================================
+# 2. MODELOS E BINÁRIOS (Pesados - Bloqueados)
+# ==========================================
+*.joblib
+*.pkl
+*.pth
+*.onnx
+*.h5
+# Nota: *.json removido para permitir o salvamento do cache (xgb_best_params.json)
+
+# ==========================================
+# 3. PYTHON E JUPYTER (Temporários - Bloqueados)
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+.ipynb_checkpoints/
+
+# ==========================================
+# 4. QGIS E SISTEMA (Temporários - Bloqueados)
+# ==========================================
+# Bloqueia apenas os arquivos de backup/temporários do QGIS, mas deixa o .qgz principal passar
+*.qgz~
+*.qgs~
+.DS_Store
+Thumbs.db
+
+# Atalhos do Google Drive (Incompatíveis com Git)
+*.gsheet
+*.gdoc
+*.gslides
+
+# Ignorar o script que contém o Token do GitHub
+notebooks/sincronizacao_Git.ipynb

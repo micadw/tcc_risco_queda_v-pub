@@ -1,0 +1,146 @@
+.
+├── arvores_parq
+├── data
+│   ├── processed
+│   │   ├── 00_dataset_queda_MASTER.parquet
+│   │   ├── dataset_all_features_imputed_DEDUP_cleaned.gpkg
+│   │   └── pre_processed
+│   │       ├── arvores.gpkg
+│   │       ├── dataset_all_features_imputed_DEDUP.gpkg
+│   │       ├── dataset_vias_features_espaciais_DEDUP.gpkg
+│   │       ├── ocorrencias_queda_DEDUP.gpkg
+│   │       ├── ocorrencias_queda.gpkg
+│   │       ├── quedas_DEDUP_2014_2017.gpkg
+│   │       ├── vias_calcadas_DEDUP.gpkg
+│   │       ├── vias_calcadas.gpkg
+│   │       └── vias.gpkg
+│   └── raw
+│       ├── SIRGAS_SHP_arvore.zip
+│       ├── SIRGAS_SHP_logradouronbl.zip
+│       └── SIRGAS_SHP_riscoocorrencia.zip
+├── docs
+│   ├── dicionario_dados.csv
+│   └── dicionario_dados.gsheet
+├── estrutura.txt
+├── LICENSE.txt
+├── notebooks
+│   ├── 01_data_transformation.ipynb
+│   ├── 02_modelagem.ipynb
+│   ├── 03_mapa.ipynb
+│   ├── exploracao_livre.ipynb
+│   └── sincronizacao_Git.ipynb
+├── README.md
+├── requirements.txt
+├── results
+│   ├── figures
+│   │   ├── 01_curva_roc_modelos__20260330-1931_cenario_completo_triade_v1.png
+│   │   ├── 01_curva_roc_modelos__20260331-1023_cenario_completo_triade_v1.png
+│   │   ├── 02_matriz_confusao_xgb__20260330-1931_cenario_completo_triade_v1.png
+│   │   ├── 02_simulacao_custo_threshold__20260330-1931_cenario_completo_triade_v1.png
+│   │   ├── 02_simulacao_custo_threshold__20260331-1023_cenario_completo_triade_v1.png
+│   │   ├── 03_matriz_confusao_xgb__20260330-1931_cenario_completo_triade_v1.png
+│   │   ├── 04_feature_importance_xgb__20260330-1931_cenario_completo_triade_v1.png
+│   │   ├── 05_importancia_exaustiva_modelos__20260330-1931_cenario_completo_triade_v1.png
+│   │   ├── 05_importancia_exaustiva_modelos__20260331-1023_cenario_completo_triade_v1.png
+│   │   └── figura_vif_cidade_20260330-1931_completo_todas_features.jpg
+│   ├── maps
+│   │   ├── mapa_interativo
+│   │   │   ├── css
+│   │   │   │   ├── fontawesome-all.min.css
+│   │   │   │   ├── images
+│   │   │   │   │   ├── cancel_@2X.png
+│   │   │   │   │   ├── cancel.png
+│   │   │   │   │   ├── check_@2X.png
+│   │   │   │   │   ├── check.png
+│   │   │   │   │   ├── focus_@2X.png
+│   │   │   │   │   ├── focus.png
+│   │   │   │   │   ├── layers-2x.png
+│   │   │   │   │   ├── layers.png
+│   │   │   │   │   ├── marker-icon-2x.png
+│   │   │   │   │   ├── marker-icon.png
+│   │   │   │   │   ├── marker-shadow.png
+│   │   │   │   │   ├── measure-control.png
+│   │   │   │   │   ├── rulers_@2X.png
+│   │   │   │   │   ├── rulers.png
+│   │   │   │   │   ├── start_@2X.png
+│   │   │   │   │   ├── start.png
+│   │   │   │   │   ├── throbber.gif
+│   │   │   │   │   ├── trash_@2X.png
+│   │   │   │   │   └── trash.png
+│   │   │   │   ├── L.Control.Layers.Tree.css
+│   │   │   │   ├── leaflet.css
+│   │   │   │   ├── leaflet.photon.css
+│   │   │   │   ├── leaflet-search.css
+│   │   │   │   ├── MarkerCluster.css
+│   │   │   │   ├── MarkerCluster.Default.css
+│   │   │   │   └── qgis2web.css
+│   │   │   ├── data
+│   │   │   │   └── mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0.js
+│   │   │   ├── images
+│   │   │   │   ├── loader.gif
+│   │   │   │   └── search-icon.png
+│   │   │   ├── index.html
+│   │   │   ├── js
+│   │   │   │   ├── Autolinker.min.js
+│   │   │   │   ├── labelgun.min.js
+│   │   │   │   ├── labels.js
+│   │   │   │   ├── L.Control.Layers.Tree.min.js
+│   │   │   │   ├── leaflet-hash.js
+│   │   │   │   ├── leaflet-heat.js
+│   │   │   │   ├── leaflet.js
+│   │   │   │   ├── leaflet.js.map
+│   │   │   │   ├── leaflet.markercluster.js
+│   │   │   │   ├── leaflet.pattern.js
+│   │   │   │   ├── leaflet.photon.js
+│   │   │   │   ├── leaflet.rotatedMarker.js
+│   │   │   │   ├── leaflet-search.js
+│   │   │   │   ├── leaflet-svg-shape-markers.min.js
+│   │   │   │   ├── leaflet-tilelayer-wmts.js
+│   │   │   │   ├── Leaflet.VectorGrid.js
+│   │   │   │   ├── leaflet.wms.js
+│   │   │   │   ├── multi-style-layer.js
+│   │   │   │   ├── OSMBuildings-Leaflet.js
+│   │   │   │   ├── qgis2web_expressions.js
+│   │   │   │   └── rbush.min.js
+│   │   │   ├── legend
+│   │   │   │   ├── mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_1BaixoRisco0.png
+│   │   │   │   ├── mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_2RiscoModerado1.png
+│   │   │   │   ├── mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_3AltoRiscoPrioridadedeVistoria2.png
+│   │   │   │   ├── mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_4.png
+│   │   │   │   └── mapa_risco_qgis2web__202603311103_geral1mapa_risco_qgis2web__202603311103_geral_0_4RiscoCríticoEmergência3.png
+│   │   │   ├── markers
+│   │   │   └── webfonts
+│   │   │       ├── fa-solid-900.ttf
+│   │   │       └── fa-solid-900.woff2
+│   │   ├── mapa_risco_kepler_SP.html
+│   │   └── mapa_risco_qgis2web.geojson
+│   ├── models
+│   │   ├── modelo_xgb_cenario_completo_triade_v1.pkl
+│   │   ├── threshold_cenario_completo_triade_v1.pkl
+│   │   └── xgb_best_params_completo_todas_features.json
+│   └── tables
+│       ├── 02_tabela_vif__20260331-1023_cenario_completo_triade_v1.csv
+│       ├── 04_pesos_lasso__20260331-1023_cenario_completo_triade_v1.csv
+│       ├── 06_predicoes_teste__20260331-1023_cenario_completo_triade_v1.csv
+│       ├── 07_simulacao_custo_operacional__20260331-1023_cenario_completo_triade_v1.csv
+│       ├── 08_tabela_metricas_finais__20260331-1023_cenario_completo_triade_v1.csv
+│       ├── 09_comparacao_matrizes__20260331-1023_cenario_completo_triade_v1.csv
+│       ├── 11a_importancia_xgboost__20260331-1023_cenario_completo_triade_v1.csv
+│       └── 11b_importancia_lasso__20260331-1023_cenario_completo_triade_v1.csv
+└── src
+    ├── Cópia de __init__.py
+    ├── ETL_functions.py
+    ├── evaluation.py
+    ├── optimization.py
+    ├── __pycache__
+    │   ├── ETL_functions.cpython-312.pyc
+    │   ├── evaluation.cpython-312.pyc
+    │   ├── optimization.cpython-312.pyc
+    │   ├── spatial_features.cpython-312.pyc
+    │   ├── spatial_utils.cpython-312.pyc
+    │   └── visualization.cpython-312.pyc
+    ├── spatial_features.py
+    ├── spatial_utils.py
+    └── visualization.py
+
+22 directories, 121 files

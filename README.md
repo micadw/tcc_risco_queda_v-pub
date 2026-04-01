@@ -17,13 +17,12 @@ A organização do projeto segue a seguinte arquitetura de diretórios:
 
 tcc-risco-queda-sp/
 │
-├── data/                    
+├── data/
 │   ├── raw/                 <- Dados brutos (Cadastro de árvores, Quedas SIGRC, Viário CET)
 │   └── processed/           <- Dados limpos, unificados e agregados por segmento viário
 │
 ├── docs/                    <- Documentação auxiliar
 │   ├── dicionario_dados.csv <- Descrição tabular das variáveis e features geradas
-│   └── dicionario_dados.gsheet
 │
 ├── notebooks/               <- Pipeline sequencial de análise espacial e modelagem
 │   ├── 01_data_transformation.ipynb <- Limpeza, feature engineering espacial e junções

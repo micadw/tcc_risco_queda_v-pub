@@ -37,6 +37,12 @@ def calcular_icc(df, col_arvores, col_largura, col_comprimento_km):
     confinamento = df[col_arvores] / area_disponivel
     return confinamento.replace([np.inf, -np.inf], 0).fillna(0)
 
+def calcular_idav(df):
+    denominador = (df['via_calcada_largura_min'] + 0.01) * (df['via_extensao_km']*1000)
+    denominador = denominador.replace(0, 1e-9)
+    idav = df['via_arvores_contagem'] / denominador
+    return idav.replace([np.inf, -np.inf], 0).fillna(0)
+
 def get_azimute(geom):
     try:
         if not geom or geom.is_empty:
